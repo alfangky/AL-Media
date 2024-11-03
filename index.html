@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AL Media - Social Media</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary-color: #1da1f2;
+        --background-color: #f5f8fa;
+        --border-color: #e1e8ed;
+        --text-color: #14171a;
+        --secondary-text: #657786;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      /* Navbar styles */
+      .navbar {
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        max-width: 975px;
+        margin: 0 auto;
+        padding: 0 20px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-brand {
+        font-size: 24px;
+        font-weight: bold;
+        color: #262626;
+        text-decoration: none;
+      }
+
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        color: #262626;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item.active {
+        font-weight: bold;
+      }
+
+      .notification-badge {
+        background-color: #ff3040;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: -6px;
+        margin-top: -10px;
+      }
+
+      .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .verified {
+        display: inline-block;
+        width: 1em; /* Makes it scale with font size */
+        height: 1em;
+        margin-left: 0.2em;
+        vertical-align: middle;
+      }
+
+      /* Optional: make it slightly larger than the text */
+      .verified svg {
+        width: 120%;
+        height: 120%;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        padding: 20px;
+      }
+
+      .mobile-menu .nav-item {
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 8px 12px;
+        border: 1px solid #dbdbdb;
+        border-radius: 8px;
+        width: 240px;
+        font-size: 14px;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .search-container {
+          display: none;
+        }
+
+        .mobile-menu .search-container {
+          display: flex;
+          margin: 12px 0;
+        }
+
+        .mobile-menu .search-input {
+          width: 100%;
+        }
+      }
+      .sidebar {
+        height: calc(100vh - 64px);
+        position: sticky;
+        top: 64px;
+      }
+
+      .post-form textarea {
+        resize: none;
+        min-height: 100px;
+      }
+
+      .post-interaction:hover {
+        color: #3b82f6;
+      }
+
+      .trending-topic:hover {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+
+      @media (max-width: 1024px) {
+        .sidebar {
+          display: none;
+        }
+      }
+      .media-preview {
+        max-width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+      }
+
+      .media-input {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+      <div class="nav-container">
+        <a href="#" class="nav-brand">AL Media</a>
+
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+
+        <div class="nav-menu">
+          <a href="#" class="nav-item active" aria-label="Home">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Explore">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+              />
+              <path d="M13 7H11V13H17V11H13V7Z" />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Messages">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Notifications">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+              />
+            </svg>
+            <span class="notification-badge">3</span>
+          </a>
+
+          <a href="profile.html" class="nav-item" aria-label="Profile">
+            <img
+              src="profile-icon-symbol-design-illustration-vector.jpg"
+              alt="Profile"
+              class="profile-pic"
+            />
+          </a>
+        </div>
+
+        <button
+          class="hamburger"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu">
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+        <a href="#" class="nav-item active">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+            />
+          </svg>
+          Home
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+            />
+            <path d="M13 7H11V13H17V11H13V7Z" />
+          </svg>
+          Explore
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+            />
+          </svg>
+          Messages
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+            />
+          </svg>
+          Notifications
+        </a>
+        <a href="#" class="nav-item">
+          <img src="/api/placeholder/32/32" alt="Profile" class="profile-pic" />
+          Profile
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto pt-16 px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 py-6">
+        <!-- Left Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="sidebar bg-white rounded-lg shadow p-4 space-y-4">
+            <div class="flex items-center space-x-3 p-2">
+              <img
+                src="84e6dfb80d2437fa925d3e068153048c.jpg"
+                alt="Profile"
+                class="w-10 h-10 rounded-full"
+              />
+              <div>
+                <h3 class="font-semibold">AL FANGKY</h3>
+                <p class="text-sm text-gray-500">@alfangky</p>
+              </div>
+            </div>
+
+            <div class="border-t pt-4">
+              <h4 class="font-semibold mb-2">Statistics</h4>
+              <div class="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <p class="font-bold">528</p>
+                  <p class="text-sm text-gray-500">Posts</p>
+                </div>
+                <div>
+                  <p class="font-bold">2.1k</p>
+                  <p class="text-sm text-gray-500">Following</p>
+                </div>
+                <div>
+                  <p class="font-bold">1.8k</p>
+                  <p class="text-sm text-gray-500">Followers</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t pt-4">
+              <h4 class="font-semibold mb-2">Quick Links</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 2L1 12h3v9h7v-6h2v6h7v-9h3L12 2zm0 2.7L19 11v8h-3v-6H8v6H5v-8l7-6.3z"
+                      />
+                    </svg>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                    <span>Profile</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"
+                      />
+                      <path d="M7 12h2v5H7zm4-7h2v12h-2zm4 4h2v8h-2z" />
+                    </svg>
+                    <span>Analytics</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"
+                      />
+                    </svg>
+                    <span>Settings</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Post Form -->
+          <div class="bg-white rounded-lg shadow mb-6">
+            <div class="p-4">
+              <div class="flex space-x-4">
+                <img
+                  src="profile-icon-symbol-design-illustration-vector.jpg"
+                  alt="Profile"
+                  class="w-10 h-10 rounded-full"
+                />
+                <div class="w-full">
+                  <textarea
+                    id="postContent"
+                    placeholder="What's on your mind?"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  ></textarea>
+                  <div id="mediaPreviewContainer" class="mt-4 hidden">
+                    <img
+                      id="imagePreview"
+                      class="media-preview hidden"
+                      alt="Preview"
+                    />
+                    <video
+                      id="videoPreview"
+                      class="media-preview hidden"
+                      controls
+                    ></video>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center mt-4">
+                <div class="flex space-x-4">
+                  <input
+                    type="file"
+                    id="photoInput"
+                    class="media-input"
+                    accept="image/*"
+                  />
+                  <button
+                    onclick="document.getElementById('photoInput').click()"
+                    class="flex items-center space-x-2 text-gray-600 hover:text-blue-600"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                    <span>Photo</span>
+                  </button>
+                  <input
+                    type="file"
+                    id="videoInput"
+                    class="media-input"
+                    accept="video/*"
+                  />
+                  <button
+                    onclick="document.getElementById('videoInput').click()"
+                    class="flex items-center space-x-2 text-gray-600 hover:text-blue-600"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"
+                      />
+                    </svg>
+                    <span>Video</span>
+                  </button>
+                </div>
+                <button
+                  id="postButton"
+                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Posts Container -->
+          <div id="postsContainer" class="space-y-6">
+            <!-- Posts will be added here dynamically -->
+          </div>
+          <!-- Posts -->
+          <div class="space-y-6">
+            <!-- Sample Post -->
+            <div class="bg-white rounded-lg shadow">
+              <div class="p-4">
+                <div class="flex justify-between items-start">
+                  <div class="flex space-x-3">
+                    <img
+                      src="84e6dfb80d2437fa925d3e068153048c.jpg"
+                      alt="Profile"
+                      class="w-10 h-10 rounded-full"
+                    />
+                    <div>
+                      <h4 class="font-semibold">
+                        AL FANGKY<span class="verified">
+                          <svg
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 0.5L14.4 2.1L17.2 1.8L18.8 4.2L21.6 5L21.9 7.8L24 10L21.9 12.2L21.6 15L18.8 15.8L17.2 18.2L14.4 17.9L12 19.5L9.6 17.9L6.8 18.2L5.2 15.8L2.4 15L2.1 12.2L0 10L2.1 7.8L2.4 5L5.2 4.2L6.8 1.8L9.6 2.1L12 0.5Z"
+                              fill="#0095F6"
+                            />
+                            <circle cx="12" cy="10" r="8" fill="#0095F6" />
+                            <path
+                              d="M8.5 10L11 12.5L15.5 8"
+                              stroke="white"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              fill="none"
+                            /></svg
+                        ></span>
+                      </h4>
+                      <p class="text-sm text-gray-500">2 hours ago</p>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <p class="mt-4">
+                  Just finished working on an amazing project! Can't wait to
+                  share more details with everyone. #dji #drones
+                </p>
+                <img
+                  src="drone-permit-license-malaysia-001.jpg"
+                  alt="Post image"
+                  class="mt-4 w-full rounded-lg"
+                />
+                <div
+                  class="mt-4 flex justify-between items-center border-t pt-4"
+                >
+                  <button class="post-interaction flex items-center space-x-2">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                      />
+                    </svg>
+                    <span>2.5k</span>
+                  </button>
+                  <button class="post-interaction flex items-center space-x-2">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"
+                      />
+                    </svg>
+                    <span>482</span>
+                  </button>
+                  <button class="post-interaction flex items-center space-x-2">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+                      />
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="sidebar bg-white rounded-lg shadow p-4 space-y-6">
+            <!-- Trending Topics -->
+            <div>
+              <h3 class="font-semibold text-xl mb-4">Trending Topics</h3>
+              <div class="space-y-4">
+                <div class="trending-topic p-2 rounded-lg cursor-pointer">
+                  <p class="text-sm text-gray-500">#webdevelopment</p>
+                  <p class="font-medium">10.5k posts</p>
+                </div>
+                <div class="trending-topic p-2 rounded-lg cursor-pointer">
+                  <p class="text-sm text-gray-500">#technology</p>
+                  <p class="font-medium">8.2k posts</p>
+                </div>
+                <div class="trending-topic p-2 rounded-lg cursor-pointer">
+                  <p class="text-sm text-gray-500">#coding</p>
+                  <p class="font-medium">6.7k posts</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Suggested Follows -->
+            <div>
+              <h3 class="font-semibold text-xl mb-4">Who to Follow</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <img
+                      src="130b8f7f683f3dc8761a1de6674c139c.jpg"
+                      alt="Profile"
+                      class="w-10 h-10 rounded-full"
+                    />
+                    <div>
+                      <p class="font-medium">Kiki Wayne</p>
+                      <p class="text-sm text-gray-500">@kikiwayne</p>
+                    </div>
+                  </div>
+                  <button
+                    class="px-4 py-1 bg-blue-600 text-white rounded-full hover:bg-blue-700 text-sm"
+                  >
+                    Follow
+                  </button>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <img
+                      src="delon.jpg"
+                      alt="Profile"
+                      class="w-10 h-10 rounded-full"
+                    />
+                    <div>
+                      <p class="font-medium">Kiki Delon</p>
+                      <p class="text-sm text-gray-500">@kikidelon</p>
+                    </div>
+                  </div>
+                  <button
+                    class="px-4 py-1 bg-blue-600 text-white rounded-full hover:bg-blue-700 text-sm"
+                  >
+                    Follow
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        // Toggle mobile menu
+        hamburger.addEventListener("click", function () {
+          mobileMenu.classList.toggle("active");
+          const isExpanded = mobileMenu.classList.contains("active");
+          hamburger.setAttribute("aria-expanded", isExpanded);
+        });
+
+        // Handle active state for nav items
+        navItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            // Remove active class from all items
+            navItems.forEach((navItem) => navItem.classList.remove("active"));
+            // Add active class to clicked item
+            this.classList.add("active");
+          });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !e.target.closest(".mobile-menu") &&
+            !e.target.closest(".hamburger")
+          ) {
+            mobileMenu.classList.remove("active");
+            hamburger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        // Handle keyboard navigation
+        navItems.forEach((item) => {
+          item.addEventListener("keydown", function (e) {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              this.click();
+            }
+          });
+        });
+      });
+
+      let selectedMedia = null;
+      let posts = [];
+
+      // Media input handling
+      document
+        .getElementById("photoInput")
+        .addEventListener("change", handleMediaInput);
+      document
+        .getElementById("videoInput")
+        .addEventListener("change", handleMediaInput);
+
+      function handleMediaInput(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const isVideo = event.target.id === "videoInput";
+        const previewContainer = document.getElementById(
+          "mediaPreviewContainer"
+        );
+        const imagePreview = document.getElementById("imagePreview");
+        const videoPreview = document.getElementById("videoPreview");
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          selectedMedia = {
+            dataUrl: e.target.result,
+            type: isVideo ? "video" : "image",
+          };
+
+          previewContainer.classList.remove("hidden");
+          if (isVideo) {
+            imagePreview.classList.add("hidden");
+            videoPreview.classList.remove("hidden");
+            videoPreview.src = e.target.result;
+          } else {
+            videoPreview.classList.add("hidden");
+            imagePreview.classList.remove("hidden");
+            imagePreview.src = e.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // Post creation
+      document
+        .getElementById("postButton")
+        .addEventListener("click", createPost);
+
+      function createPost() {
+        const content = document.getElementById("postContent").value.trim();
+        if (!content && !selectedMedia) return;
+
+        const post = {
+          id: Date.now(),
+          content: content,
+          timestamp: new Date(),
+          media: selectedMedia,
+          likes: 0,
+          comments: 0,
+        };
+
+        posts.unshift(post);
+        renderPosts();
+        resetForm();
+      }
+
+      function resetForm() {
+        document.getElementById("postContent").value = "";
+        document
+          .getElementById("mediaPreviewContainer")
+          .classList.add("hidden");
+        document.getElementById("imagePreview").classList.add("hidden");
+        document.getElementById("videoPreview").classList.add("hidden");
+        selectedMedia = null;
+        document.getElementById("photoInput").value = "";
+        document.getElementById("videoInput").value = "";
+      }
+
+      function formatTimestamp(timestamp) {
+        const minutes = Math.floor((Date.now() - timestamp) / 60000);
+        if (minutes < 60) return `${minutes}m ago`;
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours}h ago`;
+        return `${Math.floor(hours / 24)}d ago`;
+      }
+
+      function renderPosts() {
+        const container = document.getElementById("postsContainer");
+        container.innerHTML = posts
+          .map(
+            (post) => `
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <div class="flex space-x-3">
+                            <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
+                            <div>
+                                <h4 class="font-semibold">AL FANGKY</h4>
+                                <p class="text-sm text-gray-500">${formatTimestamp(
+                                  post.timestamp
+                                )}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4">${post.content}</p>
+                    ${post.media ? renderMedia(post.media) : ""}
+                    <div class="mt-4 flex justify-between items-center border-t pt-4">
+                        <button class="post-interaction flex items-center space-x-2" onclick="toggleLike(${
+                          post.id
+                        })">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                            <span>${post.likes}</span>
+                        </button>
+                        <button class="post-interaction flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/>
+                            </svg>
+                            <span>${post.comments}</span>
+                        </button>
+                        <button class="post-interaction flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderMedia(media) {
+        if (media.type === "video") {
+          return `<video src="${media.dataUrl}" class="mt-4 w-full rounded-lg" controls></video>`;
+        } else {
+          return `<img src="${media.dataUrl}" alt="Post image" class="mt-4 w-full rounded-lg">`;
+        }
+      }
+
+      function toggleLike(postId) {
+        const post = posts.find((p) => p.id === postId);
+        if (post) {
+          post.likes += 1;
+          renderPosts();
+        }
+      }
+
+      // Initial render
+      renderPosts();
+
+      // Toggle mobile menu
+      const menuButton = document.querySelector('[aria-label="Menu"]');
+      const mobileMenu = document.querySelector(".mobile-menu");
+
+      if (menuButton && mobileMenu) {
+        menuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+      }
+
+      // Post form functionality
+      const postForm = document.querySelector("textarea");
+      const postButton = document.querySelector('button:contains("Post")');
+
+      if (postForm && postButton) {
+        postButton.addEventListener("click", () => {
+          const content = postForm.value.trim();
+          if (content) {
+            // Here you would typically send the post to your backend
+            console.log("Posting:", content);
+            postForm.value = "";
+          }
+        });
+      }
+
+      // Like button functionality
+      const likeButtons = document.querySelectorAll(".post-interaction");
+
+      likeButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          this.classList.toggle("text-blue-600");
+        });
+      });
+
+      // Follow button functionality
+      const followButtons = document.querySelectorAll(
+        'button:contains("Follow")'
+      );
+
+      followButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const isFollowing = this.textContent.trim() === "Following";
+          this.textContent = isFollowing ? "Follow" : "Following";
+          this.classList.toggle("bg-gray-200");
+          this.classList.toggle("text-gray-800");
+          this.classList.toggle("bg-blue-600");
+          this.classList.toggle("text-white");
+        });
+      });
+    </script>
+  </body>
+</html>

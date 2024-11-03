@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - AL Media</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary-color: #1da1f2;
+        --background-color: #f5f8fa;
+        --border-color: #e1e8ed;
+        --text-color: #14171a;
+        --secondary-text: #657786;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      /* Navbar styles */
+      .navbar {
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        max-width: 975px;
+        margin: 0 auto;
+        padding: 0 20px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-brand {
+        font-size: 24px;
+        font-weight: bold;
+        color: #262626;
+        text-decoration: none;
+      }
+
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        color: #262626;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item.active {
+        font-weight: bold;
+      }
+
+      .notification-badge {
+        background-color: #ff3040;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: -6px;
+        margin-top: -10px;
+      }
+
+      .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        padding: 20px;
+      }
+
+      .mobile-menu .nav-item {
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 8px 12px;
+        border: 1px solid #dbdbdb;
+        border-radius: 8px;
+        width: 240px;
+        font-size: 14px;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .search-container {
+          display: none;
+        }
+
+        .mobile-menu .search-container {
+          display: flex;
+          margin: 12px 0;
+        }
+
+        .mobile-menu .search-input {
+          width: 100%;
+        }
+      }
+      .profile-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .profile-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 20px;
+        transition: background-color 0.2s;
+      }
+
+      .profile-trigger:hover {
+        background-color: rgba(29, 161, 242, 0.1);
+      }
+
+      .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        min-width: 200px;
+        display: none;
+        margin-top: 0.5rem;
+      }
+
+      .dropdown-menu.active {
+        display: block;
+      }
+
+      .dropdown-item {
+        padding: 0.8rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        cursor: pointer;
+        color: var(--text-color);
+        text-decoration: none;
+      }
+
+      .dropdown-item:hover {
+        background-color: var(--background-color);
+      }
+
+      /* Profile Page Styles */
+      .profile-container {
+        max-width: 1000px;
+        margin: 60px auto 0;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+
+      .cover-photo {
+        height: 200px;
+        background-color: var(--primary-color);
+        position: relative;
+      }
+
+      .profile-info {
+        padding: 1rem 2rem;
+        position: relative;
+      }
+
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid white;
+        position: absolute;
+        top: -75px;
+        left: 2rem;
+        object-fit: cover;
+      }
+
+      .profile-actions {
+        float: right;
+        margin-top: 1rem;
+      }
+
+      .edit-profile-btn {
+        padding: 0.6rem 1.2rem;
+        border: 1px solid var(--primary-color);
+        border-radius: 20px;
+        color: var(--primary-color);
+        background: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .edit-profile-btn:hover {
+        background-color: rgba(29, 161, 242, 0.1);
+      }
+
+      .profile-details {
+        margin-top: 80px;
+      }
+
+      .profile-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .verified {
+    display: inline-block;
+    width: 1em;  /* Makes it scale with font size */
+    height: 1em;
+    margin-left: 0.2em;
+    vertical-align: middle;
+}
+
+/* Optional: make it slightly larger than the text */
+.verified svg {
+    width: 120%;
+    height: 120%;
+}
+
+      .profile-handle {
+        color: var(--secondary-text);
+        margin-bottom: 1rem;
+      }
+
+      .profile-bio {
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .profile-meta {
+        display: flex;
+        gap: 2rem;
+        color: var(--secondary-text);
+        margin-bottom: 1rem;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .profile-stats {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .stat-value {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      .stat-label {
+        color: var(--secondary-text);
+      }
+
+      .profile-content {
+        border-top: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+      }
+
+      .content-tabs {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .tab {
+        padding: 1rem;
+        cursor: pointer;
+        color: var(--secondary-text);
+        font-weight: bold;
+        position: relative;
+      }
+
+      .tab.active {
+        color: var(--primary-color);
+      }
+
+      .tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+      }
+
+      .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      .post-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .post-card-content {
+        padding: 1rem;
+      }
+
+      .post-card-actions {
+        display: flex;
+        justify-content: space-around;
+        padding: 0.5rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .action-btn {
+        color: var(--secondary-text);
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .action-btn:hover {
+        color: var(--primary-color);
+      }
+
+      /* Edit Profile Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--secondary-text);
+      }
+
+      .edit-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-group label {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.8rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      .save-profile-btn {
+        padding: 0.8rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+
+      .save-profile-btn:hover {
+        background-color: #1a91da;
+      }
+
+      @media (max-width: 768px) {
+        .profile-container {
+          border-radius: 0;
+          margin-top: 56px;
+        }
+
+        .cover-photo {
+          height: 150px;
+        }
+
+        .profile-avatar {
+          width: 100px;
+          height: 100px;
+          top: -50px;
+        }
+
+        .profile-details {
+          margin-top: 60px;
+        }
+
+        .profile-meta,
+        .profile-stats {
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .posts-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation">
+      <div class="nav-container">
+        <a href="#" class="nav-brand">AL Media</a>
+
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+
+        <div class="nav-menu">
+          <a href="index.html" class="nav-item active" aria-label="Home">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Explore">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+              />
+              <path d="M13 7H11V13H17V11H13V7Z" />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Messages">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Notifications">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+              />
+            </svg>
+            <span class="notification-badge">3</span>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Profile">
+            <img
+              src="profile-icon-symbol-design-illustration-vector.jpg"
+              alt="Profile"
+              class="profile-pic"
+            />
+          </a>
+        </div>
+
+        <button
+          class="hamburger"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu">
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+        <a href="#" class="nav-item active">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+            />
+          </svg>
+          Home
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+            />
+            <path d="M13 7H11V13H17V11H13V7Z" />
+          </svg>
+          Explore
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+            />
+          </svg>
+          Messages
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+            />
+          </svg>
+          Notifications
+        </a>
+        <a href="#" class="nav-item">
+          <img src="/api/placeholder/32/32" alt="Profile" class="profile-pic" />
+          Profile
+        </a>
+      </div>
+    </nav>
+
+    <div class="profile-container">
+      <div class="cover-photo"></div>
+      <div class="profile-info">
+        <img
+          src="/api/placeholder/150/150"
+          alt="Profile"
+          class="profile-avatar"
+          id="profileAvatar"
+        />
+        <div class="profile-actions">
+          <button class="edit-profile-btn">Edit Profile</button>
+        </div>
+        <div class="profile-details">
+          <div class="profile-name">
+            AL FANGKY <span class="verified">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0.5L14.4 2.1L17.2 1.8L18.8 4.2L21.6 5L21.9 7.8L24 10L21.9 12.2L21.6 15L18.8 15.8L17.2 18.2L14.4 17.9L12 19.5L9.6 17.9L6.8 18.2L5.2 15.8L2.4 15L2.1 12.2L0 10L2.1 7.8L2.4 5L5.2 4.2L6.8 1.8L9.6 2.1L12 0.5Z" fill="#0095F6"/>
+                <circle cx="12" cy="10" r="8" fill="#0095F6"/>
+                <path d="M8.5 10L11 12.5L15.5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+              <path
+                d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0zm3.354 5.354a.5.5 0 0 1 0 .708L7.5 10.207 4.646 7.354a.5.5 0 1 1 .708-.708L7.5 8.793l3.146-3.147a.5.5 0 0 1 .708 0z"
+              />
+            </svg>
+          </div>
+          <div class="profile-handle">@alfangky</div>
+          <div class="profile-bio">
+            🌟 Digital Creator | Software Engineer
+            <br />Making the web a better place, one line of code at a time
+            <br />✨ Building amazing things with passion
+          </div>
+          <div class="profile-meta">
+            <div class="meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              San Francisco, CA
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-link"></i>
+              github.com/alfangky
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              Joined January 2024
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-value">1,234</span>
+              <span class="stat-label">Following</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">5,678</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">789</span>
+              <span class="stat-label">Posts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-content">
+        <div class="content-tabs">
+          <div class="tab active">Posts</div>
+          <div class="tab">Media</div>
+          <div class="tab">Likes</div>
+        </div>
+        <div class="posts-grid">
+          <!-- Sample posts will be added here dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profile</h2>
+          <button class="close-modal">×</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        // Toggle mobile menu
+        hamburger.addEventListener("click", function () {
+          mobileMenu.classList.toggle("active");
+          const isExpanded = mobileMenu.classList.contains("active");
+          hamburger.setAttribute("aria-expanded", isExpanded);
+        });
+
+        // Handle active state for nav items
+        navItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            // Remove active class from all items
+            navItems.forEach((navItem) => navItem.classList.remove("active"));
+            // Add active class to clicked item
+            this.classList.add("active");
+          });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !e.target.closest(".mobile-menu") &&
+            !e.target.closest(".hamburger")
+          ) {
+            mobileMenu.classList.remove("active");
+            hamburger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        // Handle keyboard navigation
+        navItems.forEach((item) => {
+          item.addEventListener("keydown", function (e) {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              this.click();
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
