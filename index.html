@@ -191,6 +191,270 @@
           width: 100%;
         }
       }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+      }
+
+      .main-content {
+        width: flex;
+        padding-top: 60px;
+        background: #fafafa;
+      }
+
+      .stories-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 16px;
+        background: white;
+        border: 1px solid #dbdbdb;
+        border-radius: 8px;
+      }
+
+      .stories-wrapper {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 4px 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        position: relative;
+      }
+
+      .stories-wrapper::-webkit-scrollbar {
+        display: none;
+      }
+
+      .story {
+        min-width: 85px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .story:active {
+        transform: scale(0.95);
+      }
+
+      .add-story {
+        position: relative;
+      }
+
+      .add-story .story-ring {
+        background: #efefef;
+        border: none;
+      }
+
+      .add-story .story-image {
+        border: none;
+      }
+
+      .add-button {
+        position: absolute;
+        bottom: 30px;
+        right: 0;
+        width: 24px;
+        height: 24px;
+        background: #0095f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid white;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .story-ring {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+        padding: 3px;
+        margin-bottom: 8px;
+      }
+
+      .story.seen .story-ring {
+        background: #dbdbdb;
+      }
+
+      .story-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        background: #fafafa;
+      }
+
+      .story-username {
+        font-size: 12px;
+        color: #262626;
+        max-width: 85px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .story-timer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        display: flex;
+        gap: 4px;
+        padding: 8px;
+      }
+
+      .timer-segment {
+        height: 2px;
+        background: rgba(255, 255, 255, 0.35);
+        flex-grow: 1;
+        border-radius: 1px;
+      }
+
+      .timer-segment.active {
+        background: white;
+      }
+
+      .story-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+
+      .story-modal-content {
+        max-width: 400px;
+        width: 100%;
+        height: 100vh;
+        background: #262626;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .story-modal-header {
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+      }
+
+      .story-modal-user-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
+      }
+
+      .story-modal-user-info {
+        flex-grow: 1;
+      }
+
+      .story-modal-username {
+        font-weight: 600;
+        font-size: 14px;
+        display: block;
+      }
+
+      .story-modal-time {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
+      .story-modal-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
+
+      .story-modal-close:hover {
+        opacity: 1;
+      }
+
+      .story-modal-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding-top: 50px;
+        }
+
+        .stories-container {
+          padding: 8px;
+          border-radius: 0;
+          border-left: none;
+          border-right: none;
+        }
+
+        .story {
+          min-width: 75px;
+        }
+
+        .story-ring {
+          width: 75px;
+          height: 75px;
+        }
+
+        .add-button {
+          width: 22px;
+          height: 22px;
+          font-size: 14px;
+        }
+
+        .story-username {
+          font-size: 11px;
+          max-width: 75px;
+        }
+
+        .story-modal-content {
+          width: 100%;
+          border-radius: 0;
+        }
+      }
       .sidebar {
         height: calc(100vh - 64px);
         position: sticky;
@@ -256,7 +520,7 @@
             </svg>
           </a>
 
-          <a href="#" class="nav-item" aria-label="Explore">
+          <a href="explorer.html" class="nav-item" aria-label="Explore">
             <svg
               aria-hidden="true"
               width="24"
@@ -337,7 +601,7 @@
           </svg>
           Home
         </a>
-        <a href="#" class="nav-item">
+        <a href="explorer.html" class="nav-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
@@ -372,6 +636,31 @@
         </a>
       </div>
     </nav>
+    <div class="main-content">
+      <div class="stories-container">
+        <div class="stories-wrapper">
+          <!-- Stories will be inserted here by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Story Modal -->
+    <div class="story-modal">
+      <div class="story-modal-content">
+        <div class="story-timer">
+          <!-- Timer segments will be added by JS -->
+        </div>
+        <div class="story-modal-header">
+          <img class="story-modal-user-image" src="" alt="" />
+          <div class="story-modal-user-info">
+            <span class="story-modal-username"></span>
+            <span class="story-modal-time">1h ago</span>
+          </div>
+          <button class="story-modal-close" aria-label="Close story">×</button>
+        </div>
+        <img class="story-modal-image" src="" alt="" />
+      </div>
+    </div>
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto pt-16 px-4">
@@ -589,16 +878,17 @@
                       class="w-10 h-10 rounded-full"
                     />
                     <div>
-                       <h1 class="header-title">
-                        AL FANGKY <span class="verified-badge">
+                      <h1 class="header-title">
+                        AL FANGKY
+                        <span class="verified-badge">
                           <svg viewBox="0 0 24 24">
                             <path
                               d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
                             />
                           </svg>
                         </span>
-                       </h1>
-                       Developer
+                      </h1>
+                      Developer
                     </div>
                   </div>
                   <button class="text-gray-400 hover:text-gray-600">
@@ -780,7 +1070,159 @@
           });
         });
       });
+      // Sample data - replace with your actual user data
+      const stories = [
+        { username: "Your Story", image: "zzz.jpg", isAdd: true },
+        { username: "mr_elliot", image: "elliot.jpeg", seen: false },
+        { username: "miss_ironi", image: "zzd.jpg", seen: false },
+        { username: "mr_ironi", image: "zzx.jpeg", seen: true },
+        { username: "ronald_bone", image: "100k-ai-faces-6.jpg", seen: true },
+        { username: "im.vengeance", image: "zzv.jpeg", seen: false },
+        { username: "louis_fort", image: "OIP (8).jpeg", seen: true },
+        { username: "linus_linux", image: "linus.jpg", seen: false },
+      ];
 
+      const storiesWrapper = document.querySelector(".stories-wrapper");
+      const modal = document.querySelector(".story-modal");
+      const modalImage = modal.querySelector(".story-modal-image");
+      const modalUserImage = modal.querySelector(".story-modal-user-image");
+      const modalUsername = modal.querySelector(".story-modal-username");
+      const closeButton = modal.querySelector(".story-modal-close");
+      let currentStoryIndex = 0;
+      let storyTimeout;
+
+      // Create story elements
+      stories.forEach((story, index) => {
+        const storyElement = document.createElement("div");
+        storyElement.className = `story ${story.isAdd ? "add-story" : ""} ${
+          story.seen ? "seen" : ""
+        }`;
+
+        if (story.isAdd) {
+          storyElement.innerHTML = `
+          <div class="story-ring">
+            <img src="${story.image}" alt="Add story" class="story-image">
+          </div>
+          <div class="add-button">+</div>
+          <div class="story-username">${story.username}</div>
+        `;
+
+          storyElement.addEventListener("click", () => {
+            alert("Add story feature would open here");
+          });
+        } else {
+          storyElement.innerHTML = `
+          <div class="story-ring">
+            <img 
+              src="${story.image}" 
+              alt="${story.username}'s story" 
+              class="story-image"
+              loading="lazy"
+            >
+          </div>
+          <div class="story-username">${story.username}</div>
+        `;
+
+          storyElement.addEventListener("click", () => {
+            openStory(index);
+          });
+        }
+
+        storiesWrapper.appendChild(storyElement);
+      });
+
+      // Story viewing functionality
+      function openStory(index) {
+        currentStoryIndex = index;
+        const story = stories[index];
+
+        modalImage.src = story.image;
+        modalUserImage.src = story.image;
+        modalUsername.textContent = story.username;
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+
+        // Add timer segments
+        const timerContainer = modal.querySelector(".story-timer");
+        timerContainer.innerHTML = "";
+        for (let i = 0; i < 5; i++) {
+          const segment = document.createElement("div");
+          segment.className = `timer-segment ${i === 0 ? "active" : ""}`;
+          timerContainer.appendChild(segment);
+        }
+
+        startStoryTimer();
+      }
+
+      function startStoryTimer() {
+        clearTimeout(storyTimeout);
+        const segments = modal.querySelectorAll(".timer-segment");
+        let currentSegment = 0;
+
+        function activateSegment() {
+          if (currentSegment >= segments.length) {
+            nextStory();
+            return;
+          }
+
+          segments[currentSegment].classList.add("active");
+          currentSegment++;
+          storyTimeout = setTimeout(activateSegment, 2000);
+        }
+
+        activateSegment();
+      }
+
+      function nextStory() {
+        if (currentStoryIndex < stories.length - 1) {
+          openStory(currentStoryIndex + 1);
+        } else {
+          closeModal();
+        }
+      }
+
+      function previousStory() {
+        if (currentStoryIndex > 1) {
+          openStory(currentStoryIndex - 1);
+        }
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+        clearTimeout(storyTimeout);
+      }
+
+      // Event listeners
+      closeButton.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowRight") nextStory();
+        if (e.key === "ArrowLeft") previousStory();
+      });
+
+      // Touch events for story navigation
+      let touchStartX = 0;
+      modalImage.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+      });
+
+      modalImage.addEventListener("touchend", (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            nextStory();
+          } else {
+            previousStory();
+          }
+        }
+      });
       let selectedMedia = null;
       let posts = [];
 
