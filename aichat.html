@@ -1,868 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IntelliChat AI</title>
-    <style>
-      /* Navbar styles */
-      .navbar {
-        background-color: white;
-        border-bottom: 1px solid #dbdbdb;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ai.css"?
+</head>
+<body>
+  <nav class="navbar" role="navigation">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">AL Media</a>
 
-      .nav-container {
-        max-width: 975px;
-        margin: 0 auto;
-        padding: 0 20px;
-        height: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .nav-brand {
-        font-size: 24px;
-        font-weight: bold;
-        color: #262626;
-        text-decoration: none;
-      }
-
-      .nav-menu {
-        display: flex;
-        align-items: center;
-        gap: 22px;
-      }
-
-      .nav-item {
-        text-decoration: none;
-        color: #262626;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px;
-        border-radius: 8px;
-        transition: background-color 0.2s;
-      }
-
-      .nav-item:hover {
-        background-color: #f0f0f0;
-      }
-
-      .nav-item.active {
-        font-weight: bold;
-      }
-
-      .notification-badge {
-        background-color: #ff3040;
-        color: white;
-        font-size: 12px;
-        padding: 2px 6px;
-        border-radius: 10px;
-        margin-left: -6px;
-        margin-top: -10px;
-      }
-
-      .profile-pic {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .profile-name {
-        font-size: 1.5rem;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .hamburger {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px;
-      }
-
-      /* Mobile menu */
-      .mobile-menu {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background-color: white;
-        border-bottom: 1px solid #dbdbdb;
-        padding: 20px;
-      }
-
-      .mobile-menu .nav-item {
-        padding: 12px;
-        border-radius: 8px;
-      }
-
-      .search-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-
-      .search-input {
-        padding: 8px 12px;
-        border: 1px solid #dbdbdb;
-        border-radius: 8px;
-        width: 240px;
-        font-size: 14px;
-      }
-
-      /* Responsive styles */
-      @media (max-width: 768px) {
-        .nav-menu {
-          display: none;
-        }
-
-        .hamburger {
-          display: block;
-        }
-
-        .mobile-menu.active {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .search-container {
-          display: none;
-        }
-
-        .mobile-menu .search-container {
-          display: flex;
-          margin: 12px 0;
-        }
-
-        .mobile-menu .search-input {
-          width: 100%;
-        }
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: system-ui, -apple-system, sans-serif;
-        background: #f0f2f5;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .chat-container {
-        width: 100%;
-        max-width: 600px;
-        height: 80vh;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-      }
-
-      .chat-header {
-        padding: 16px 20px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: #ffffff;
-        border-radius: 12px 12px 0 0;
-      }
-
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(45deg, #4776e6, #8e54e9);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 600;
-      }
-
-      .header-title {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0;
-        font-size: 18px;
-        font-weight: 600;
-        color: #1c1e21;
-      }
-
-      .verified-badge {
-        width: 20px;
-        height: 20px;
-        background: #1da1f2;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .verified-badge svg {
-        width: 12px;
-        height: 12px;
-        fill: white;
-      }
-
-      .chat-messages {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        background: #ffffff;
-      }
-
-      .message {
-        max-width: 80%;
-        padding: 12px 16px;
-        border-radius: 18px;
-        position: relative;
-        color: #1c1e21;
-        animation: messageAppear 0.3s ease;
-      }
-
-      .message.sent {
-        align-self: flex-end;
-        background: #0095f6;
-        color: white;
-      }
-
-      .message.received {
-        align-self: flex-start;
-        background: #f0f2f5;
-      }
-
-      .message-content {
-        margin-bottom: 4px;
-        line-height: 1.4;
-      }
-
-      .message-time {
-        font-size: 12px;
-        color: #65676b;
-        display: block;
-        margin-top: 4px;
-      }
-
-      .message.sent .message-time {
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      .typing-indicator {
-        padding: 20px;
-        border-top: 1px solid #eee;
-        background: #ffffff;
-        border-radius: 0 0 12px 12px;
-      }
-
-      .input-container {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-      }
-
-      .message-input {
-        flex: 1;
-        padding: 12px 16px;
-        border: 1px solid #eee;
-        border-radius: 24px;
-        outline: none;
-        font-size: 14px;
-        transition: border-color 0.3s ease;
-      }
-
-      .message-input:focus {
-        border-color: #0095f6;
-      }
-
-      .send-button {
-        background: #0095f6;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 24px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
-      }
-
-      .send-button:hover {
-        background: #0081d6;
-      }
-
-      .dots {
-        display: none;
-        gap: 4px;
-        padding: 12px;
-        background: #f0f2f5;
-        border-radius: 18px;
-        width: fit-content;
-        margin-bottom: 16px;
-      }
-
-      .dot {
-        width: 8px;
-        height: 8px;
-        background: #65676b;
-        border-radius: 50%;
-        animation: bounce 1.4s infinite;
-      }
-
-      .dot:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-      .dot:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-4px);
-        }
-      }
-
-      @keyframes messageAppear {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Scrollbar Styling */
-      .chat-messages::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      .chat-messages::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-
-      .chat-messages::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 3px;
-      }
-
-      .chat-messages::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar" role="navigation">
-      <div class="nav-container">
-        <a href="#" class="nav-brand">AL Media</a>
-
-        <div class="search-container">
-          <input
-            type="search"
-            class="search-input"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </div>
-
-        <div class="nav-menu">
-          <a href="index.html" class="nav-item active" aria-label="Home">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
-              />
-            </svg>
-          </a>
-
-          <a href="#" class="nav-item" aria-label="Explore">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
-              />
-              <path d="M13 7H11V13H17V11H13V7Z" />
-            </svg>
-          </a>
-
-          <a href="#" class="nav-item" aria-label="Messages">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
-              />
-            </svg>
-          </a>
-
-          <a href="#" class="nav-item" aria-label="Notifications">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
-              />
-            </svg>
-            <span class="notification-badge">3</span>
-          </a>
-
-          <a href="profile.html" class="nav-item" aria-label="Profile">
-            <img
-              src="profile-icon-symbol-design-illustration-vector.jpg"
-              alt="Profile"
-              class="profile-pic"
-            />
-          </a>
-        </div>
-
-        <button
-          class="hamburger"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
-          </svg>
-        </button>
+      <div class="search-container">
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Search"
+          aria-label="Search"
+        />
       </div>
 
-      <div class="mobile-menu">
-        <div class="search-container">
-          <input
-            type="search"
-            class="search-input"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </div>
-        <a href="index.html" class="nav-item active">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <div class="nav-menu">
+        <a href="index.html" class="nav-item active" aria-label="Home">
+          <svg
+            aria-hidden="true"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <path
               d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
             />
           </svg>
-          Home
         </a>
-        <a href="#" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+
+        <a href="#" class="nav-item" aria-label="Explore">
+          <svg
+            aria-hidden="true"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <path
               d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
             />
             <path d="M13 7H11V13H17V11H13V7Z" />
           </svg>
-          Explore
         </a>
-        <a href="#" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+
+        <a href="aichat.html" class="nav-item" aria-label="Messages">
+          <svg
+            aria-hidden="true"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <path
               d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
             />
           </svg>
-          Chat with AI
         </a>
-        <a href="#" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+
+        <a href="#" class="nav-item" aria-label="Notifications">
+          <svg
+            aria-hidden="true"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <path
               d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
             />
           </svg>
-          Notifications
+          <span class="notification-badge">3</span>
         </a>
-        <a href="profile.html" class="nav-item">
+
+        <a href="profile.html" class="nav-item" aria-label="Profile">
           <img
             src="profile-icon-symbol-design-illustration-vector.jpg"
             alt="Profile"
             class="profile-pic"
           />
-          Profile
         </a>
       </div>
-    </nav>
-    <div class="chat-container">
-      <div class="chat-header">
-        <div class="user-avatar">AI</div>
-        <h1 class="header-title">
-          Almedia AI
-          <span class="verified-badge">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-              />
-            </svg>
-          </span>
-        </h1>
-      </div>
 
-      <div class="chat-messages">
-        <!-- Messages will be added here dynamically -->
-        <div class="dots">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-
-      <div class="typing-indicator">
-        <div class="input-container">
-          <input
-            type="text"
-            class="message-input"
-            placeholder="Type your message..."
-          />
-          <button class="send-button">Send</button>
-        </div>
-      </div>
+      <button
+        class="hamburger"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
+        </svg>
+      </button>
     </div>
 
-    <!-- Add the JavaScript file link here -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const hamburger = document.querySelector(".hamburger");
-        const mobileMenu = document.querySelector(".mobile-menu");
-        const navItems = document.querySelectorAll(".nav-item");
+    <div class="mobile-menu">
+      <div class="search-container">
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </div>
+      <a href="index.html" class="nav-item active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+          />
+        </svg>
+        Home
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+          />
+          <path d="M13 7H11V13H17V11H13V7Z" />
+        </svg>
+        Explore
+      </a>
+      <a href="aichat.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+          />
+        </svg>
+        Chat with AI
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+          />
+        </svg>
+        Notifications
+      </a>
+      <a href="profile.html" class="nav-item">
+        <img
+          src="profile-icon-symbol-design-illustration-vector.jpg"
+          alt="Profile"
+          class="profile-pic"
+        />
+        Profile
+      </a>
+    </div>
+  </nav>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="ai-avatar">
+                <div class="ai-icon">AI</div>
+            </div>
+            <div class="header-info">
+              <div>
+                <h1 class="header-title">
+                  ALFangky AI
+                  <span class="verified-badge">
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                      />
+                    </svg>
+                  </span>
+                </h1>
+              </div>
+                <div class="ai-status">Ready to help with anything</div>
+            </div>
+        </header>
 
-        // Toggle mobile menu
-        hamburger.addEventListener("click", function () {
-          mobileMenu.classList.toggle("active");
-          const isExpanded = mobileMenu.classList.contains("active");
-          hamburger.setAttribute("aria-expanded", isExpanded);
-        });
+        <div id="chatMessages" class="chat-messages">
+            <div class="welcome-message">
+                <h2>Hello! I'm your ALFangky AI Assistant</h2>
+                <p>I'm an advanced AI capable of helping you with a wide range of tasks:</p>
+                
 
-        // Handle active state for nav items
-        navItems.forEach((item) => {
-          item.addEventListener("click", function (e) {
-            // Remove active class from all items
-            navItems.forEach((navItem) => navItem.classList.remove("active"));
-            // Add active class to clicked item
-            this.classList.add("active");
-          });
-        });
+                <div class="quick-actions">
+                    <p>Try these example queries:</p>
+                    <div class="example-queries">
+                        <button class="query-btn" data-query="Calculate the derivative of x^3 + 2x^2 - 4x + 1">Math Problem</button>
+                        <button class="query-btn" data-query="Translate 'Hello, how are you?' to Indonesian">Translation</button>
+                        <button class="query-btn" data-query="Who was Albert Einstein and what were his major contributions?">Historical Figure</button>
+                        <button class="query-btn" data-query="Explain quantum entanglement in simple terms">Scientific Concept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        // Close mobile menu when clicking outside
-        document.addEventListener("click", function (e) {
-          if (
-            !e.target.closest(".mobile-menu") &&
-            !e.target.closest(".hamburger")
-          ) {
-            mobileMenu.classList.remove("active");
-            hamburger.setAttribute("aria-expanded", "false");
-          }
-        });
+        <div class="chat-input-container">
+            <div class="input-wrapper">
+                <textarea id="userInput" placeholder="Ask me anything..." rows="1"></textarea>
+                <div class="input-buttons">
+                    <button id="voiceInput" class="voice-btn" aria-label="Voice Input">
+                        <svg viewbox="0 0 24 24" width="24" height="24">
+                            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                        </svg>
+                    </button>
+                    <button id="sendMessage" class="send-btn" aria-label="Send Message">
+                        <svg viewbox="0 0 24 24" width="24" height="24">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        // Handle keyboard navigation
-        navItems.forEach((item) => {
-          item.addEventListener("keydown", function (e) {
-            if (e.key === " " || e.key === "Enter") {
-              e.preventDefault();
-              this.click();
-            }
-          });
-        });
-      });
-      // Chat state management
-      const state = {
-        messages: [],
-        isTyping: false,
-        lastMessageId: 0,
-        context: [], // Store conversation context
-      };
+        <div class="features-panel">
+            <div class="feature-buttons">
+                <button class="feature-btn" data-feature="translate">
+                    <svg viewbox="0 0 24 24" width="20" height="20">
+                        <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                    </svg>
+                    Translate
+                </button>
+                <button class="feature-btn" data-feature="explain">
+                    <svg viewbox="0 0 24 24" width="20" height="20">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                    </svg>
+                    Detailed Explanation
+                </button>
+                <button class="feature-btn" data-feature="examples">
+                    <svg viewbox="0 0 24 24" width="20" height="20">
+                        <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                    </svg>
+                    Show Examples
+                </button>
+                <button class="feature-btn" data-feature="sources">
+                    <svg viewbox="0 0 24 24" width="20" height="20">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Show Sources
+                </button>
+            </div>
+        </div>
 
-      // DOM Elements
-      const chatMessages = document.querySelector(".chat-messages");
-      const messageInput = document.querySelector(".message-input");
-      const sendButton = document.querySelector(".send-button");
-      const typingIndicator = document.querySelector(".dots");
+        <div id="context-menu" class="context-menu">
+            <ul>
+                <li>Copy</li>
+                <li>Explain Further</li>
+                <li>Show Examples</li>
+                <li>View Sources</li>
+            </ul>
+        </div>
+    </div>
 
-      // Helper Functions
-      const generateMessageId = () => ++state.lastMessageId;
-
-      const formatTime = () => {
-        return new Date().toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: true,
-        });
-      };
-
-      // Advanced response generation
-      const generateAIResponse = (userMessage) => {
-        // Convert message to lowercase for easier matching
-        const input = userMessage.toLowerCase();
-
-        // Store common regex patterns
-        const patterns = {
-          greeting: /\b(hi|hello|hey|good\s?(morning|afternoon|evening))\b/i,
-          farewell: /\b(bye|goodbye|see\s?you|farewell)\b/i,
-          gratitude: /\b(thanks|thank\s?you|appreciated)\b/i,
-          question: /\b(what|why|how|where|when|who|can\s?you|could\s?you)\b/i,
-          help: /\b(help|assist|support|guide)\b/i,
-          mood: /\b(how\s?are\s?you|doing\s?well|are\s?you\s?ok)\b/i,
-          identity: /\b(who\s?are\s?you|what\s?are\s?you|your\s?name)\b/i,
-          capability: /\b(can\s?you|able\s?to|capable\s?of)\b/i,
-          math: /[-+]?[0-9]*\.?[0-9]+[\s]*[-+/*%][\s]*[-+]?[0-9]*\.?[0-9]+/g,
-          time: /\b(time|date|day|today)\b/i,
-          weather: /\b(weather|temperature|forecast|rain|sunny)\b/i,
-          code: /\b(code|program|script|function|api|developer|programming)\b/i,
-        };
-
-        // Context-aware response generation
-        const lastUserMessages = state.messages
-          .filter((m) => !m.isReceived)
-          .slice(-3)
-          .map((m) => m.text);
-
-        // Function to evaluate mathematical expressions safely
-        const evaluateMath = (expr) => {
-          try {
-            // Remove any dangerous code and eval only simple math
-            const sanitizedExpr = expr.replace(/[^0-9+\-*/.() ]/g, "");
-            return new Function("return " + sanitizedExpr)();
-          } catch (e) {
-            return null;
-          }
-        };
-
-        // Check for math expressions
-        const mathMatch = input.match(patterns.math);
-        if (mathMatch) {
-          const result = evaluateMath(mathMatch[0]);
-          if (result !== null) {
-            return `The result of ${mathMatch[0]} is ${result}`;
-          }
-        }
-
-        // Advanced pattern matching with context
-        if (patterns.greeting.test(input)) {
-          const greetings = [
-            "Hello! How can I assist you today?",
-            "Hi there! I'm ready to help you with any questions or tasks.",
-            "Greetings! What can I help you with?",
-            "Hello! I'm your AI assistant. What's on your mind?",
-          ];
-          return greetings[Math.floor(Math.random() * greetings.length)];
-        }
-
-        if (patterns.identity.test(input)) {
-          return "I'm IntelliChat AI, an advanced artificial intelligence assistant designed to help you with various tasks, answer questions, and engage in meaningful conversations. What would you like to know?";
-        }
-
-        if (patterns.capability.test(input)) {
-          return `I can help you with many things including:
-• Writing and analysis
-• Mathematical calculations
-• Programming assistance
-• General knowledge questions
-• Problem-solving
-• Creative tasks
-What specific area would you like help with?`;
-        }
-
-        if (patterns.weather.test(input)) {
-          return "I can discuss weather concepts and patterns, but I don't have access to real-time weather data. Would you like to know about weather phenomena in general?";
-        }
-
-        if (patterns.code.test(input)) {
-          return "I can help you with programming! I'm familiar with many programming languages and can assist with code review, debugging, and development. What specific programming help do you need?";
-        }
-
-        // Contextual response for questions
-        if (patterns.question.test(input)) {
-          if (input.includes("your purpose")) {
-            return "My purpose is to assist users like you with various tasks, answer questions, and provide helpful information to make your life easier. What can I help you with?";
-          }
-
-          if (input.includes("do")) {
-            return "I can help with many tasks including writing, analysis, calculations, coding, and general knowledge questions. What specific area interests you?";
-          }
-
-          return "I understand you have a question. Could you provide more details so I can give you a more accurate and helpful response?";
-        }
-
-        // Handle multiple intents
-        const intents = [];
-        Object.entries(patterns).forEach(([key, pattern]) => {
-          if (pattern.test(input)) intents.push(key);
-        });
-
-        if (intents.length > 1) {
-          // Complex response for multiple intents
-          return "I notice your message has multiple aspects. Let's address them one by one. Which would you like to focus on first?";
-        }
-
-        // Default responses based on message length and content
-        if (input.length < 10) {
-          return "Could you elaborate a bit more? I want to make sure I understand and provide the most helpful response.";
-        }
-
-        // Generic response with conversation continuation
-        const genericResponses = [
-          "I understand you're interested in this topic. Could you tell me more about what specific aspects you'd like to explore?",
-          "That's an interesting point. Would you like me to explain more about any particular aspect?",
-          "I'd be happy to help you with that. Could you provide more details about what you're looking to achieve?",
-          "I see what you're asking about. Let me know if you'd like me to elaborate on any specific part.",
-        ];
-
-        return genericResponses[
-          Math.floor(Math.random() * genericResponses.length)
-        ];
-      };
-
-      // Create a new message element
-      const createMessageElement = (text, isReceived = false) => {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message", isReceived ? "received" : "sent");
-
-        const messageContent = document.createElement("div");
-        messageContent.classList.add("message-content");
-        messageContent.innerHTML = text.replace(/\n/g, "<br>");
-
-        const timeSpan = document.createElement("span");
-        timeSpan.classList.add("message-time");
-        timeSpan.textContent = formatTime();
-
-        messageDiv.appendChild(messageContent);
-        messageDiv.appendChild(timeSpan);
-
-        return messageDiv;
-      };
-
-      // Add a message to the chat
-      const addMessage = (text, isReceived = false) => {
-        const messageElement = createMessageElement(text, isReceived);
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        state.messages.push({
-          id: generateMessageId(),
-          text,
-          isReceived,
-          timestamp: new Date(),
-        });
-      };
-
-      // Show/hide typing indicator
-      const setTypingIndicator = (show) => {
-        state.isTyping = show;
-        typingIndicator.style.display = show ? "flex" : "none";
-      };
-
-      // Enhanced AI response simulation
-      const simulateAIResponse = async (userMessage) => {
-        setTypingIndicator(true);
-
-        // Simulate realistic thinking time based on message complexity
-        const baseThinkingTime = 1000;
-        const thinkingTime = baseThinkingTime + userMessage.length * 20;
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.min(thinkingTime, 3000))
-        );
-
-        const response = generateAIResponse(userMessage);
-        setTypingIndicator(false);
-        addMessage(response, true);
-      };
-
-      // Handle sending messages
-      const handleSendMessage = () => {
-        const message = messageInput.value.trim();
-        if (message) {
-          addMessage(message, false);
-          messageInput.value = "";
-          simulateAIResponse(message);
-        }
-      };
-
-      // Event listeners
-      sendButton.addEventListener("click", handleSendMessage);
-
-      messageInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          handleSendMessage();
-        }
-      });
-
-      // Message animations
-      const addMessageAnimation = () => {
-        const messages = document.querySelectorAll(".message");
-        messages.forEach((message) => {
-          message.style.opacity = "0";
-          message.style.transform = "translateY(20px)";
-
-          requestAnimationFrame(() => {
-            message.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-            message.style.opacity = "1";
-            message.style.transform = "translateY(0)";
-          });
-        });
-      };
-
-      // Initialize chat
-      document.addEventListener("DOMContentLoaded", () => {
-        setTypingIndicator(false);
-
-        setTimeout(() => {
-          addMessage(
-            "👋 Hello! I'm IntelliChat AI, your intelligent assistant. I can help you with:\n\n" +
-              "💡 Questions & Analysis\n" +
-              "🧮 Calculations & Math\n" +
-              "💻 Programming & Technology\n" +
-              "📝 Writing & Communication\n" +
-              "🤔 Problem Solving\n\n" +
-              "How can I assist you today?",
-            true
-          );
-        }, 500);
-      });
-
-      // Export interface
-      window.chatInterface = {
-        addMessage,
-        setTypingIndicator,
-        handleSendMessage,
-      };
-    </script>
-  </body>
+    <div class="thinking-indicator hidden">
+        <div class="thinking-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        Thinking deeply about your question...
+    </div>
+    <script src="ai.js"></script>
+</body>
 </html>
