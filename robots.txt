@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+Allow: /sitemap.xml
+Sitemap: https://griyasehat.info/sitemap.xml
