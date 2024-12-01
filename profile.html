@@ -1,36 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile - Seputar Teknologi</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-      /* Reset and base styles */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      :root {
-        --primary-color: #1da1f2;
-        --background-color: #f5f8fa;
-        --border-color: #e1e8ed;
-        --text-color: #14171a;
-        --secondary-text: #657786;
-      }
-
-      body {
-        background-color: var(--background-color);
-        color: var(--text-color);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-      }
-
-      /* Navbar styles */
+              /* Navbar styles */
       .navbar {
         background-color: white;
         border-bottom: 1px solid #dbdbdb;
@@ -99,7 +75,13 @@
         border-radius: 50%;
         object-fit: cover;
       }
-
+      .profile-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
       .hamburger {
         display: none;
         background: none;
@@ -167,598 +149,620 @@
           width: 100%;
         }
       }
-      .profile-dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      .profile-trigger {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 20px;
-        transition: background-color 0.2s;
-      }
-
-      .profile-trigger:hover {
-        background-color: rgba(29, 161, 242, 0.1);
-      }
-
-      .profile-pic {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        min-width: 200px;
-        display: none;
-        margin-top: 0.5rem;
-      }
-
-      .dropdown-menu.active {
-        display: block;
-      }
-
-      .dropdown-item {
-        padding: 0.8rem 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        cursor: pointer;
-        color: var(--text-color);
-        text-decoration: none;
-      }
-
-      .dropdown-item:hover {
-        background-color: var(--background-color);
-      }
-
-      /* Profile Page Styles */
-      .profile-container {
-        max-width: 1000px;
-        margin: 60px auto 0;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-      }
-
-      .cover-photo {
-        height: 200px;
-        background-color: var(--primary-color);
-        position: relative;
-      }
-
-      .profile-info {
-        padding: 1rem 2rem;
-        position: relative;
-      }
-
-      .profile-avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: 4px solid white;
-        position: absolute;
-        top: -75px;
-        left: 2rem;
-        object-fit: cover;
-      }
-
-      .profile-actions {
-        float: right;
-        margin-top: 1rem;
-      }
-
-      .edit-profile-btn {
-        padding: 0.6rem 1.2rem;
-        border: 1px solid var(--primary-color);
-        border-radius: 20px;
-        color: var(--primary-color);
-        background: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-
-      .edit-profile-btn:hover {
-        background-color: rgba(29, 161, 242, 0.1);
-      }
-
-      .profile-details {
-        margin-top: 80px;
-      }
-
-      .profile-name {
-        font-size: 1.5rem;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .verified-badge {
-        width: 20px;
-        height: 20px;
-        background: #1da1f2;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .verified-badge svg {
-        width: 12px;
-        height: 12px;
-        fill: white;
-      }
-
-      .profile-handle {
-        color: var(--secondary-text);
-        margin-bottom: 1rem;
-      }
-
-      .profile-bio {
-        margin-bottom: 1rem;
-        line-height: 1.5;
-      }
-
-      .profile-meta {
-        display: flex;
-        gap: 2rem;
-        color: var(--secondary-text);
-        margin-bottom: 1rem;
-      }
-
-      .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .profile-stats {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .stat-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .stat-value {
-        font-weight: bold;
-        color: var(--text-color);
-      }
-
-      .stat-label {
-        color: var(--secondary-text);
-      }
-
-      .profile-content {
-        border-top: 1px solid var(--border-color);
-        padding: 1rem 2rem;
-      }
-
-      .content-tabs {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .tab {
-        padding: 1rem;
-        cursor: pointer;
-        color: var(--secondary-text);
-        font-weight: bold;
-        position: relative;
-      }
-
-      .tab.active {
-        color: var(--primary-color);
-      }
-
-      .tab.active::after {
-        content: "";
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: var(--primary-color);
-        border-radius: 2px;
-      }
-
-      .posts-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1rem;
-        padding: 1rem 0;
-      }
-
-      .post-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid var(--border-color);
-      }
-
-      .post-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-      }
-
-      .post-card-content {
-        padding: 1rem;
-      }
-
-      .post-card-actions {
-        display: flex;
-        justify-content: space-around;
-        padding: 0.5rem;
-        border-top: 1px solid var(--border-color);
-      }
-
-      .action-btn {
-        color: var(--secondary-text);
-        cursor: pointer;
-        transition: color 0.2s;
-      }
-
-      .action-btn:hover {
-        color: var(--primary-color);
-      }
-
-      /* Edit Profile Modal */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .modal.active {
-        display: flex;
-      }
-
-      .modal-content {
-        background: white;
-        padding: 2rem;
-        border-radius: 16px;
-        width: 90%;
-        max-width: 500px;
-      }
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
-
-      .close-modal {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--secondary-text);
-      }
-
-      .edit-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .form-group label {
-        font-weight: bold;
-        color: var(--text-color);
-      }
-
-      .form-group input,
-      .form-group textarea {
-        padding: 0.8rem;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        font-size: 1rem;
-      }
-
-      .save-profile-btn {
-        padding: 0.8rem;
-        background-color: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 1rem;
-      }
-
-      .save-profile-btn:hover {
-        background-color: #1a91da;
-      }
-
-      @media (max-width: 768px) {
-        .profile-container {
-          border-radius: 0;
-          margin-top: 56px;
+        :root {
+            --primary-bg: #fafafa;
+            --secondary-bg: #ffffff;
+            --text-color: #262626;
+            --accent-color: #0095f6;
+            --border-color: #dbdbdb;
+            --light-gray: #8e8e8e;
+            --overlay-bg: rgba(0,0,0,0.8);
         }
 
-        .cover-photo {
-          height: 150px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 975px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* Profile Header Styles */
+        .profile-header {
+            margin-top: 80px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 44px;
+            padding: 0 20px;
         }
 
         .profile-avatar {
-          width: 100px;
-          height: 100px;
-          top: -50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-bg);
+            overflow: hidden;
+            margin-right: 100px;
         }
 
-        .profile-details {
-          margin-top: 60px;
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .profile-meta,
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 400;
+            margin-right: 15px;
+            margin-bottom: 8px;
+        }
+        
+        .verified-badge {
+            width: 18px;
+            height: 18px;
+            background-color: rgb(145, 57, 57);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .verified-badge i {
+            color: white;
+            font-size: 12px;
+        }
+
         .profile-stats {
-          flex-wrap: wrap;
-          gap: 1rem;
+            display: flex;
+            margin-bottom: 20px;
+            gap: 40px;
         }
 
+        .stat {
+            display: flex;
+            gap: 6px;
+        }
+
+        .stat-number {
+            font-weight: 600;
+        }
+
+        .profile-bio {
+            max-width: 400px;
+        }
+
+        /* Posts Grid Styles */
         .posts-grid {
-          grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
         }
-      }
+
+        .post-item, .showcase-post {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .post-item img, .showcase-post-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .post-item:hover .post-overlay {
+            opacity: 1;
+        }
+
+        .post-stats {
+            display: flex;
+            gap: 20px;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Popup Post Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--overlay-bg);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background-color: var(--secondary-bg);
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            display: flex;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .popup-image {
+            flex: 1;
+            max-width: 60%;
+            height: auto;
+        }
+
+        .popup-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-details {
+            flex: 1;
+            max-width: 40%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .popup-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-action-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .popup-action-icons i, .popup-actions i {
+            font-size: 22px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .popup-details-content {
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .profile-avatar {
+                width: 110px;
+                height: 110px;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+.profile-name {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 90px;
+}
+            .profile-stats {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .profile-bio {
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .popup-content {
+                flex-direction: column;
+                max-height: none;
+                height: 90%;
+            }
+
+            .popup-image, .popup-details {
+                max-width: 100%;
+                flex: none;
+            }
+
+            .popup-image img {
+                max-height: 50vh;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <nav class="navbar" role="navigation">
-      <div class="nav-container">
-        <a href="#" class="nav-brand">Seputar Teknologi</a>
-
-        <div class="search-container">
-          <input
-            type="search"
-            class="search-input"
-            placeholder="Search"
-            aria-label="Search"
-          />
+        <div class="nav-container">
+          <a href="#" class="nav-brand">Seputar Teknologi</a>
+  
+          <div class="search-container">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </div>
+  
+          <div class="nav-menu">
+            <a href="index.html" class="nav-item active" aria-label="Home">
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+                />
+              </svg>
+            </a>
+  
+            <a href="#" class="nav-item" aria-label="Explore">
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+                />
+                <path d="M13 7H11V13H17V11H13V7Z" />
+              </svg>
+            </a>
+  
+            <a href="aichat.html" class="nav-item" aria-label="Messages">
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+                />
+              </svg>
+            </a>
+  
+            <a href="#" class="nav-item" aria-label="Notifications">
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+                />
+              </svg>
+              <span class="notification-badge">3</span>
+            </a>
+  
+            <a href="profile.html" class="nav-item" aria-label="Profile">
+              <img
+                src="profile-icon-symbol-design-illustration-vector.jpg"
+                alt="Profile"
+                class="profile-pic"
+              />
+            </a>
+          </div>
+  
+          <button
+            class="hamburger"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
+            </svg>
+          </button>
         </div>
-
-        <div class="nav-menu">
-          <a href="index.html" class="nav-item active" aria-label="Home">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+  
+        <div class="mobile-menu">
+          <div class="search-container">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </div>
+          <a href="index.html" class="nav-item active">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
               />
             </svg>
+            Home
           </a>
-
-          <a href="#" class="nav-item" aria-label="Explore">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+          <a href="#" class="nav-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
               />
               <path d="M13 7H11V13H17V11H13V7Z" />
             </svg>
+            Explore
           </a>
-
-          <a href="aichat.html" class="nav-item" aria-label="Messages">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+          <a href="aichat.html" class="nav-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
               />
             </svg>
+            Chat with AI
           </a>
-
-          <a href="#" class="nav-item" aria-label="Notifications">
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+          <a href="#" class="nav-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
               />
             </svg>
-            <span class="notification-badge">3</span>
+            Notifications
           </a>
-
-          <a href="#" class="nav-item" aria-label="Profile">
+          <a href="profile.html" class="nav-item">
             <img
               src="profile-icon-symbol-design-illustration-vector.jpg"
               alt="Profile"
               class="profile-pic"
             />
+            Profile
           </a>
         </div>
+      </nav>
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="kiki.jpg" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <div class="profile-title">
+                    <h1 class="profile-name">@alfangky</h1>
+                    <div class="verified-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-number">128</span>
+                        <span>posts</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">250K</span>
+                        <span>followers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">500</span>
+                        <span>following</span>
+                    </div>
+                </div>
+                <div class="profile-bio">
+                    Digital Creator | Tech Enthusiast 💻
+                    Exploring the world one pixel at a time 🌍
+                    #TechLife #Innovation
+                </div>
+            </div>
+        </div>
 
-        <button
-          class="hamburger"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="mobile-menu">
-        <div class="search-container">
-          <input
-            type="search"
-            class="search-input"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </div>
-        <a href="index.html" class="nav-item active">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
-            />
-          </svg>
-          Home
-        </a>
-        <a href="#" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
-            />
-            <path d="M13 7H11V13H17V11H13V7Z" />
-          </svg>
-          Explore
-        </a>
-        <a href="aichat.html" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
-            />
-          </svg>
-          Chat with AI
-        </a>
-        <a href="#" class="nav-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
-            />
-          </svg>
-          Notifications
-        </a>
-        <a href="#" class="nav-item">
-          <img src="profile-icon-symbol-design-illustration-vector.jpg" alt="Profile" class="profile-pic" />
-          Profile
-        </a>
-      </div>
-    </nav>
-
-    <div class="profile-container">
-      <div class="cover-photo"></div>
-      <div class="profile-info">
-        <img
-          src="84e6dfb80d2437fa925d3e068153048c.jpg"
-          alt="Profile"
-          class="profile-avatar"
-          id="profileAvatar"
-        />
-        <div class="profile-actions">
-          <button class="edit-profile-btn">Edit Profile</button>
-        </div>
-        <div class="profile-details">
-          <div class="profile-name">
-            AL FANGKY <span class="verified">
-              <span class="verified-badge">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-                  />
-                </svg>
-              </span>
-          </div>
-          <div class="profile-handle">@alfangky</div>
-          <div class="profile-bio">
-            🌟 Digital Creator | Software Engineer
-            <br />Making the web a better place, one line of code at a time
-            <br />✨ Building amazing things with passion
-          </div>
-          <div class="profile-meta">
-            <div class="meta-item">
-              <i class="fas fa-map-marker-alt"></i>
-              East Java, Indonesia
-            </div>
-            <div class="meta-item">
-              <i class="fas fa-link"></i>
-              github.com/alfangky
-            </div>
-            <div class="meta-item">
-              <i class="fas fa-calendar"></i>
-              Joined January 2024
-            </div>
-          </div>
-          <div class="profile-stats">
-            <div class="stat-item">
-              <span class="stat-value">1,234</span>
-              <span class="stat-label">Following</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">5,678</span>
-              <span class="stat-label">Followers</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">789</span>
-              <span class="stat-label">Posts</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="profile-content">
-        <div class="content-tabs">
-          <div class="tab active">Posts</div>
-          <div class="tab">Media</div>
-          <div class="tab">Likes</div>
-        </div>
         <div class="posts-grid">
-          <!-- Sample posts will be added here dynamically -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Edit Profile Modal -->
-    <div class="modal" id="editProfileModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Edit Profile</h2>
-          <button class="close-modal">×</button>
-        </div>
-      </div>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1517694712202-14dd9538c5f8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538c5f8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 1">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 4.2K</span>
+                        <span><i class="fas fa-comment"></i> 250</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 2">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 3.7K</span>
+                        <span><i class="fas fa-comment"></i> 180</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 3">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 5.1K</span>
+                        <span><i class="fas fa-comment"></i> 320</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1488590528505-4d31b5c0e7ee?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1488590528505-4d31b5c0e7ee?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 4">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 3.9K</span>
+                        <span><i class="fas fa-comment"></i> 210</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1744&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1744&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 5">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 4.5K</span>
+                        <span><i class="fas fa-comment"></i> 280</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-item" data-src="https://images.unsplash.com/photo-1517694712202-14dd9538c5f8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538c5f8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Post 6">
+                <div class="post-overlay">
+                    <div class="post-stats">
+                        <span><i class="fas fa-heart"></i> 4.2K</span>
+                        <span><i class="fas fa-comment"></i> 250</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        
+            <!-- Popup Modal -->
+            <div class="popup" id="postPopup">
+                <span class="popup-close">&times;</span>
+                <div class="popup-content">
+                    <div class="popup-image">
+                        <img id="popupImage" src="" alt="Popup Image">
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-header">
+                            <img class="popup-avatar" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Picture">
+                            <strong>johndoe</strong>
+                        </div>
+                        <div class="popup-actions">
+                            <div class="popup-action-icons">
+                                <i class="far fa-heart"></i>
+                                <i class="far fa-comment"></i>
+                                <i class="far fa-paper-plane"></i>
+                            </div>
+                            <i class="far fa-bookmark"></i>
+                        </div>
+                        <div class="popup-details-content">
+                            <div class="likes-count">250,456 likes</div>
+                            <div class="post-caption">
+                                <strong>johndoe</strong> Exploring the cutting edge of technology at this year's innovation summit. Some incredible insights into the future of AI and machine learning! 🚀🤖 
+                                <br>
+                                <br>
+                                #TechInnovation #AIFuture #InnovationSummit
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <script>
+                // Popup Functionality
+                document.addEventListener('DOMContentLoaded', () => {
+                    const popup = document.getElementById('postPopup');
+                    const popupImage = document.getElementById('popupImage');
+                    const popupClose = document.querySelector('.popup-close');
+                    
+                    // Function to open popup
+                    function openPopup(imageSrc) {
+                        popupImage.src = imageSrc;
+                        popup.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    }
+        
+                    // Function to close popup
+                    function closePopup() {
+                        popup.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+        
+                    // Add click event to all posts (including showcase post)
+                    const posts = document.querySelectorAll('.post-item, .showcase-post');
+                    posts.forEach(post => {
+                        post.addEventListener('click', (e) => {
+                            const imageSrc = post.getAttribute('data-src') || post.querySelector('img').src;
+                            openPopup(imageSrc);
+                        });
+                    });
+        
+                    // Close popup when clicking on close button
+                    popupClose.addEventListener('click', closePopup);
+        
+                    // Close popup when clicking outside of the image
+                    popup.addEventListener('click', (e) => {
+                        if (e.target === popup) {
+                            closePopup();
+                        }
+                    });
+        
+                    // Close popup with Escape key
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && popup.style.display === 'flex') {
+                            closePopup();
+                        }
+                    });
+                });
+                document.addEventListener("DOMContentLoaded", function () {
         const hamburger = document.querySelector(".hamburger");
         const mobileMenu = document.querySelector(".mobile-menu");
         const navItems = document.querySelectorAll(".nav-item");
@@ -801,6 +805,6 @@
           });
         });
       });
-    </script>
-  </body>
-</html>
+            </script>
+        </body>
+        </html>
