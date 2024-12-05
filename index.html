@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Innovation Hub</title>
+    <style>
+      /* Navbar styles */
+      .navbar {
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        max-width: 975px;
+        margin: 0 auto;
+        padding: 0 20px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-brand {
+        font-size: 24px;
+        font-weight: bold;
+        color: #262626;
+        text-decoration: none;
+      }
+
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        color: #262626;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item.active {
+        font-weight: bold;
+      }
+
+      .notification-badge {
+        background-color: #ff3040;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: -6px;
+        margin-top: -10px;
+      }
+
+      .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .profile-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        padding: 20px;
+      }
+
+      .mobile-menu .nav-item {
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 8px 12px;
+        border: 1px solid #dbdbdb;
+        border-radius: 8px;
+        width: 240px;
+        font-size: 14px;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .search-container {
+          display: none;
+        }
+
+        .mobile-menu .search-container {
+          display: flex;
+          margin: 12px 0;
+        }
+
+        .mobile-menu .search-input {
+          width: 100%;
+        }
+      }
+      :root {
+        --primary-color: #923f3f;
+        --secondary-color: #420606;
+        --text-color: #ffffff;
+        --overlay-color: rgba(0, 0, 0, 0.6);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Arial", sans-serif;
+        line-height: 1.6;
+        background-color: #f3f4f6;
+      }
+
+      .hero-section {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+      }
+
+      .hero-container {
+        width: 90%;
+        max-width: 1200px;
+        height: 70vh;
+        max-height: 800px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 2rem 2rem;
+        box-shadow: 0 10px 25px -12px rgba(0, 0, 0, 0.15);
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #751e25;
+        mix-blend-mode: multiply;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: var(--text-color);
+        padding: 2rem;
+      }
+
+      .hero-logo-wrapper {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140px;
+        height: 140px;
+        z-index: 15;
+      }
+
+      .hero-logo {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: white;
+        border: 4px solid #751e25;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        margin-top: -10px;
+      }
+
+      .hero-logo:hover {
+        transform: scale(1.05);
+      }
+
+      .hero-logo img {
+        max-width: 80%;
+        max-height: 80%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        line-height: 1.2;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2rem;
+        max-width: 700px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .social-icon {
+        color: white;
+        text-decoration: none;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+      }
+
+      .social-icon svg {
+        width: 32px;
+        height: 32px;
+        transition: transform 0.3s ease;
+      }
+
+      .social-icon:hover svg {
+        transform: scale(1.2) rotate(5deg);
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .social-icons {
+          gap: 1.5rem;
+        }
+
+        .social-icon svg {
+          width: 28px;
+          height: 28px;
+        }
+
+        .hero-logo-wrapper {
+          width: 100px;
+          height: 100px;
+          bottom: -50px;
+        }
+      }
+
+      .show {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+
+      /* Prevent content from being hidden behind hero */
+      main {
+        padding-top: calc(70vh + 60px);
+      }
+      .content {
+            flex: 1;
+        }
+
+        .footer-wave {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            overflow: hidden;
+        }
+
+        .footer-wave::before, 
+        .footer-wave::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 40%;
+            animation: wave 10s linear infinite;
+        }
+
+        .footer-wave::after {
+            border-radius: 35%;
+            background: rgba(255,255,255,0.05);
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            position: relative;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-section:hover {
+            transform: translateY(-10px);
+        }
+
+        .section-icon {
+            position: absolute;
+            top: -30px;
+            right: 15px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .section-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .footer-section:hover .section-icon {
+            opacity: 1;
+            transform: rotate(15deg);
+        }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .footer-links li:hover::before {
+            opacity: 1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: white;
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.5;
+            transition: stroke 0.3s ease;
+        }
+
+        .social-icon:hover svg {
+            stroke: var(--primary-color);
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 25px 0 0 25px;
+        }
+
+        .newsletter-button {
+            padding: 12px 25px;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .footer-bottom {
+            background: #1a1919;
+            text-align: center;
+            padding: 15px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation">
+      <div class="nav-container">
+        <a href="#" class="nav-brand">Seputar Teknologi</a>
+
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+
+        <div class="nav-menu">
+          <a href="/" class="nav-item active" aria-label="Home">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+              />
+            </svg>
+          </a>
+
+          <a href="/explorer" class="nav-item" aria-label="Explore">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+              />
+              <path d="M13 7H11V13H17V11H13V7Z" />
+            </svg>
+          </a>
+
+          <a href="/ai-chat" class="nav-item" aria-label="Messages">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="nav-item" aria-label="Notifications">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+              />
+            </svg>
+            <span class="notification-badge">3</span>
+          </a>
+
+          <a href="/profile" class="nav-item" aria-label="Profile">
+            <img src="/images/teknologi.jpg" alt="Profile" class="profile-pic" />
+          </a>
+        </div>
+
+        <button
+          class="hamburger"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu">
+        <div class="search-container">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+        <a href="/" class="nav-item active">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.0996L1 12H4V21H11V15H13V21H20V12H23L12 2.0996ZM12 4.79152L18 10.1914V19H15V13H9V19H6V10.1914L12 4.79152Z"
+            />
+          </svg>
+          Home
+        </a>
+        <a href="/explorer" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+            />
+            <path d="M13 7H11V13H17V11H13V7Z" />
+          </svg>
+          Explore
+        </a>
+        <a href="/ai-chat" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"
+            />
+          </svg>
+          Chat with AI
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+            />
+          </svg>
+          Notifications
+        </a>
+        <a href="/profile" class="nav-item">
+          <img src="/images/teknologi.jpg" alt="Profile" class="profile-pic" />
+          Profile
+        </a>
+      </div>
+    </nav>
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-background" id="heroBackground"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">Seputar Teknologi</h1>
+          <p class="hero-subtitle">
+            Explore seputar teknologi tanpa batas!<br />
+            <br />#website ini masih dalam pengembangan
+          </p>
+          <div class="social-icons">
+            <a
+              href="https://www.instagram.com/seputarteknologi/"
+              class="social-icon"
+              aria-label="Instagram"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="YouTube">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"
+                ></path>
+                <polygon
+                  points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
+                ></polygon>
+              </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Threads">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M6 15c4 4 8 6 12 6 2 0 3-2 3-4 0-4-4-6-8-6-4 0-8 2-8 6z"
+                ></path>
+                <circle cx="12" cy="11" r="4"></circle>
+                <path d="M12 7V3l-2.5 2.5"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-logo-wrapper">
+        <div class="hero-logo">
+          <img src="/images/teknologi.jpg" alt="Company Logo" />
+        </div>
+      </div>
+    </section>
+    <div class="content">
+      <!-- Konten utama website akan ditempatkan di sini -->
+  </div>
+<main></main>
+  <div class="footer-wave"></div>
+  <footer class="footer">
+      <div class="footer-section">
+          <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+          </div>
+          <h3 class="footer-title">Tentang Kami</h3>
+          <p>Portal berita terkini dengan informasi akurat, mendalam, dan terpercaya.</p>
+      </div>
+
+      <div class="footer-section">
+          <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                  <line x1="9" y1="21" x2="9" y2="9"/>
+              </svg>
+          </div>
+          <h3 class="footer-title">Kategori</h3>
+          <ul class="footer-links">
+              <li>Nasional</li>
+              <li>Internasional</li>
+              <li>Ekonomi</li>
+              <li>Teknologi</li>
+          </ul>
+      </div>
+
+      <div class="footer-section">
+          <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+          </div>
+          <h3 class="footer-title">Kontak</h3>
+          <p>+62 </p>
+          <p>seputarteknologi.official@gmail.com</p>
+      </div>
+
+      <div class="footer-section">
+          <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+              </svg>
+          </div>
+          <h3 class="footer-title">Newsletter</h3>
+          <p>Dapatkan berita terbaru langsung di email Anda</p>
+          <form class="newsletter-form">
+              <input type="email" placeholder="Email Anda" class="newsletter-input" required>
+              <button type="submit" class="newsletter-button">Kirim</button>
+          </form>
+      </div>
+
+      <div class="footer-section">
+          <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              </svg>
+          </div>
+          <h3 class="footer-title">Sosial Media</h3>
+          <div class="social-icons">
+              <a href="https://twitter.com/seputartechno" class="social-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                  </svg>
+              </a>
+              <a href="#" class="social-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  </svg>
+              </a>
+              <a href="https://instagram.com/seputarteknologi" class="social-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  </svg>
+              </a>
+          </div>
+      </div>
+  </footer>
+  <div class="footer-bottom">
+      © 2024 Seputar Teknologi. All rights reserved
+  </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const heroTitle = document.querySelector(".hero-title");
+        const heroSubtitle = document.querySelector(".hero-subtitle");
+        const socialIcons = document.querySelectorAll(".social-icon");
+        const heroBackground = document.getElementById("heroBackground");
+
+        // Function to set background image
+        function setBackgroundImage(imageUrl) {
+          heroBackground.style.backgroundImage = `url('${imageUrl}')`;
+        }
+
+        // Uncomment and replace with your image path
+        // setBackgroundImage('/path/to/your/business-image.jpg');
+
+        // Stagger reveal animation
+        setTimeout(() => {
+          heroTitle.classList.add("show");
+        }, 300);
+
+        setTimeout(() => {
+          heroSubtitle.classList.add("show");
+        }, 600);
+
+        socialIcons.forEach((icon, index) => {
+          setTimeout(() => {
+            icon.classList.add("show");
+          }, 900 + index * 200);
+        });
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        // Toggle mobile menu
+        hamburger.addEventListener("click", function () {
+          mobileMenu.classList.toggle("active");
+          const isExpanded = mobileMenu.classList.contains("active");
+          hamburger.setAttribute("aria-expanded", isExpanded);
+        });
+
+        // Handle active state for nav items
+        navItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            // Remove active class from all items
+            navItems.forEach((navItem) => navItem.classList.remove("active"));
+            // Add active class to clicked item
+            this.classList.add("active");
+          });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !e.target.closest(".mobile-menu") &&
+            !e.target.closest(".hamburger")
+          ) {
+            mobileMenu.classList.remove("active");
+            hamburger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        // Handle keyboard navigation
+        navItems.forEach((item) => {
+          item.addEventListener("keydown", function (e) {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              this.click();
+            }
+          });
+        });
+      });
+      document.querySelectorAll('.footer-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.section-icon svg');
+                icon.style.animation = 'pulse 0.5s infinite';
+            });
+
+            section.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.section-icon svg');
+                icon.style.animation = 'none';
+            });
+        });
+
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (emailRegex.test(email)) {
+                alert('Terima kasih! Anda berhasil berlangganan newsletter.');
+                this.reset();
+            } else {
+                alert('Masukkan email yang valid');
+            }
+        });
+    </script>
+  </body>
+</html>
