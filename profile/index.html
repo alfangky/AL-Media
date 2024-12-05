@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Profile</title>
+    <title>AL FANGKY - Professional Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
               /* Navbar styles */
@@ -150,131 +150,173 @@
         }
       }
         :root {
-            --primary-bg: #fafafa;
-            --secondary-bg: #ffffff;
-            --text-color: #262626;
-            --accent-color: #0095f6;
-            --border-color: #dbdbdb;
-            --light-gray: #8e8e8e;
-            --overlay-bg: rgba(0,0,0,0.8);
+            --primary-color: #420a0a;
+            --secondary-color: #8c3838;
+            --background-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --white: #ffffff;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-            line-height: 1.5;
-        }
-
-        .container {
-            max-width: 975px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-        }
-
-        /* Profile Header Styles */
-        .profile-header {
-            margin-top: 80px;
+            font-family: 'Inter', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
             display: flex;
-            align-items: center;
-            margin-bottom: 44px;
-            padding: 0 20px;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .profile-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary-bg);
+        .profile-container {
+            width: 100%;
+            max-width: 1300px;
+            background-color: var(--white);
+margin-top: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
             overflow: hidden;
-            margin-right: 100px;
         }
 
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @media screen and (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .profile-info {
-            flex-grow: 1;
-        }
-
-        .profile-title {
+        .profile-sidebar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 50px 40px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
         }
 
         .profile-name {
-            font-size: 28px;
-            font-weight: 400;
-            margin-right: 15px;
-            margin-bottom: 8px;
-        }
-        
-        .verified-badge {
-            width: 18px;
-            height: 18px;
-            background-color: rgb(145, 57, 57);
-            border-radius: 50%;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
+            margin-top: 20px;
+            position: relative;
         }
 
-        .verified-badge i {
-            color: white;
-            font-size: 12px;
+        .profile-name h2 {
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        .profile-stats {
+        .verified-badge {
+            position: absolute;
+            right: -40px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #000000, #db5151, #b43a3a, #c13535, #e1306c, #fd1d1d);
+            border-radius: 50%;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .verified-badge::before {
+            content: '✓';
+            color: var(--white);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .skill-tag {
+            background-color: rgba(255,255,255,0.2);
+            color: var(--white);
+            padding: 7px 14px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .social-link {
+            color: var(--white);
+            font-size: 1.8em;
+            transition: color 0.3s ease, transform 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .social-link:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .profile-content {
+            padding: 50px 40px;
+            background-color: var(--white);
+        }
+
+        .about-section {
+            margin-bottom: 35px;
+        }
+
+        .about-section h3 {
+            color: var(--primary-color);
+            border-bottom: 3px solid #c13584;
+            padding-bottom: 10px;
             margin-bottom: 20px;
-            gap: 40px;
         }
 
-        .stat {
-            display: flex;
-            gap: 6px;
-        }
-
-        .stat-number {
-            font-weight: 600;
-        }
-
-        .profile-bio {
-            max-width: 400px;
-        }
-
-        /* Posts Grid Styles */
         .posts-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .post-item, .showcase-post {
+        .post {
             position: relative;
-            width: 100%;
-            padding-top: 100%;
+            aspect-ratio: 1/1;
             overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
             cursor: pointer;
         }
 
-        .post-item img, .showcase-post-image {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .post:hover {
+            transform: scale(1.03);
+        }
+
+        .post img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -294,155 +336,217 @@
             transition: opacity 0.3s ease;
         }
 
-        .post-item:hover .post-overlay {
+        .post:hover .post-overlay {
             opacity: 1;
         }
 
-        .post-stats {
-            display: flex;
-            gap: 20px;
-            color: white;
-            font-size: 18px;
+        .post-overlay-icon {
+            color: var(--white);
+            font-size: 2em;
+        }
+        .content {
+            flex: 1;
         }
 
-        /* Popup Post Styles */
-        .popup {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: var(--overlay-bg);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .popup-content {
-            background-color: var(--secondary-bg);
-            max-width: 900px;
-            width: 90%;
-            max-height: 90vh;
-            display: flex;
+        .footer-wave {
             position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .popup-image {
-            flex: 1;
-            max-width: 60%;
-            height: auto;
-        }
-
-        .popup-image img {
             width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            overflow: hidden;
+        }
+
+        .footer-wave::before, 
+        .footer-wave::after {
+            content: '';
+            position: absolute;
+            width: 200%;
             height: 100%;
-            object-fit: cover;
+            background: rgba(255,255,255,0.1);
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 40%;
+            animation: wave 10s linear infinite;
         }
 
-        .popup-details {
+        .footer-wave::after {
+            border-radius: 35%;
+            background: rgba(255,255,255,0.05);
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            position: relative;
+        }
+
+        .footer-section {
             flex: 1;
-            max-width: 40%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .popup-header {
-            display: flex;
-            align-items: center;
+            min-width: 200px;
             padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            transition: transform 0.3s ease;
         }
 
-        .popup-avatar {
+        .footer-section:hover {
+            transform: translateY(-10px);
+        }
+
+        .section-icon {
+            position: absolute;
+            top: -30px;
+            right: 15px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .section-icon svg {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.5;
         }
 
-        .popup-close {
+        .footer-section:hover .section-icon {
+            opacity: 1;
+            transform: rotate(15deg);
+        }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            color: var(--text-color);
-            cursor: pointer;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: white;
         }
 
-        .popup-actions {
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .footer-links li:hover::before {
+            opacity: 1;
+        }
+
+        .social-icons {
             display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .popup-action-icons {
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
             display: flex;
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .popup-action-icons i, .popup-actions i {
-            font-size: 22px;
-            color: var(--text-color);
+        .social-icon:hover {
+            background: white;
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.5;
+            transition: stroke 0.3s ease;
+        }
+
+        .social-icon:hover svg {
+            stroke: var(--primary-color);
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 25px 0 0 25px;
+        }
+
+        .newsletter-button {
+            padding: 12px 25px;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 0 25px 25px 0;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .popup-details-content {
+        .newsletter-button:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .footer-bottom {
+            background: #1a1919;
+            text-align: center;
             padding: 15px;
-            overflow-y: auto;
+            color: rgba(255,255,255,0.8);
         }
 
-        /* Responsive Styles */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .profile-header {
+            .footer {
                 flex-direction: column;
-                text-align: center;
-                margin-bottom: 20px;
-            }
-
-            .profile-avatar {
-                width: 110px;
-                height: 110px;
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-.profile-name {
-    margin-bottom: 10px;
-    margin-right: 10px;
-    margin-left: 55px;
-}
-            .profile-stats {
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .profile-bio {
-                max-width: 100%;
-                text-align: center;
-            }
-
-            .popup-content {
-                flex-direction: column;
-                max-height: none;
-                height: 90%;
-            }
-
-            .popup-image, .popup-details {
-                max-width: 100%;
-                flex: none;
-            }
-
-            .popup-image img {
-                max-height: 50vh;
-                width: 100%;
-                object-fit: cover;
             }
         }
     </style>
@@ -592,231 +696,222 @@
           </a>
         </div>
       </nav>
-    <div class="container">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <img src="/images/teknologi.jpg" alt="Profile Picture">
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <img src="/api/placeholder/250/250" alt="AL FANGKY" class="profile-image" id="profileImage">
+            
+            <div class="profile-name">
+                <h2 id="profileName">AL FANGKY</h2>
+                <div class="verified-badge"></div>
             </div>
-            <div class="profile-info">
-                <div class="profile-title">
-                    <h1 class="profile-name">seputarteknologi</h1>
-                    <div class="verified-badge">
-                        <i class="fas fa-check"></i>
-                    </div>
-                </div>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="stat-number">128</span>
-                        <span>posts</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">250K</span>
-                        <span>followers</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">500</span>
-                        <span>following</span>
-                    </div>
-                </div>
-                <div class="profile-bio">
-                    Digital Creator | Tech Enthusiast 💻
-                    Exploring the world one pixel at a time 🌍
-                    #TechLife #Innovation
-                </div>
+            
+            <div class="skill-tags" id="skillTags"></div>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/al_fangky" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/alfangky" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="https://youtube.com/@alfangky" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
             </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="about-section">
+                <h3>About Me</h3>
+                <p id="profileBio">A multi-talented creator passionate about technology and design. Always seeking new challenges and committed to continuous personal and professional growth.</p>
+            </div>
+            
+            <h3>Random photos</h3>
+            <div class="posts-grid" id="postsContainer"></div>
+        </div>
+    </div>
+    <div class="content">
+        <!-- Konten utama website akan ditempatkan di sini -->
+    </div>
+
+    <div class="footer-wave"></div>
+    <footer class="footer">
+        <div class="footer-section">
+            <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            </div>
+            <h3 class="footer-title">Tentang Kami</h3>
+            <p>Portal berita terkini dengan informasi akurat, mendalam, dan terpercaya.</p>
         </div>
 
-        <div class="posts-grid">
-            <div class="post-item">
-                <img src="helo.png" alt="Post 1">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 4.2K</span>
-                        <span><i class="fas fa-comment"></i> 250</span>
-                    </div>
-                </div>
+        <div class="footer-section">
+            <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="9" y1="21" x2="9" y2="9"/>
+                </svg>
             </div>
-            <div class="post-item">
-                <img src="hihi.png" alt="Post 2">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 3.7K</span>
-                        <span><i class="fas fa-comment"></i> 180</span>
-                    </div>
-                </div>
+            <h3 class="footer-title">Kategori</h3>
+            <ul class="footer-links">
+                <li>Nasional</li>
+                <li>Internasional</li>
+                <li>Ekonomi</li>
+                <li>Teknologi</li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
             </div>
-            <div class="post-item">
-                <img src="huhu.png" alt="Post 3">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 5.1K</span>
-                        <span><i class="fas fa-comment"></i> 320</span>
-                    </div>
-                </div>
+            <h3 class="footer-title">Kontak</h3>
+            <p>+62 </p>
+            <p>seputarteknologi.official@gmail.com</p>
+        </div>
+
+        <div class="footer-section">
+            <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
             </div>
-            <div class="post-item">
-                <img src="hohe.png" alt="Post 4">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 3.9K</span>
-                        <span><i class="fas fa-comment"></i> 210</span>
-                    </div>
-                </div>
+            <h3 class="footer-title">Newsletter</h3>
+            <p>Dapatkan berita terbaru langsung di email Anda</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email Anda" class="newsletter-input" required>
+                <button type="submit" class="newsletter-button">Kirim</button>
+            </form>
+        </div>
+
+        <div class="footer-section">
+            <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                </svg>
             </div>
-            <div class="post-item">
-                <img src="hoho.png" alt="Post 5">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 4.5K</span>
-                        <span><i class="fas fa-comment"></i> 280</span>
-                    </div>
-                </div>
-            </div>
-            <div class="post-item">
-              <img src="hehu.png" alt="Post 5">
-              <div class="post-overlay">
-                  <div class="post-stats">
-                      <span><i class="fas fa-heart"></i> 4.5K</span>
-                      <span><i class="fas fa-comment"></i> 280</span>
-                  </div>
-              </div>
-          </div>
-          <div class="post-item">
-            <img src="ha1.png" alt="Post 5">
-            <div class="post-overlay">
-                <div class="post-stats">
-                    <span><i class="fas fa-heart"></i> 4.5K</span>
-                    <span><i class="fas fa-comment"></i> 280</span>
-                </div>
+            <h3 class="footer-title">Sosial Media</h3>
+            <div class="social-icons">
+                <a href="https://twitter.com/seputartechno" class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/seputarteknologi" class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
             </div>
         </div>
-        <div class="post-item">
-          <img src="ha2.png" alt="Post 5">
-          <div class="post-overlay">
-              <div class="post-stats">
-                  <span><i class="fas fa-heart"></i> 4.5K</span>
-                  <span><i class="fas fa-comment"></i> 280</span>
-              </div>
-          </div>
-      </div>
-      <div class="post-item">
-        <img src="ha3.png" alt="Post 5">
-        <div class="post-overlay">
-            <div class="post-stats">
-                <span><i class="fas fa-heart"></i> 4.5K</span>
-                <span><i class="fas fa-comment"></i> 280</span>
-            </div>
-        </div>
+    </footer>
+    <div class="footer-bottom">
+        © 2024 Seputar Teknologi. All rights reserved
     </div>
-    <div class="post-item">
-      <img src="ha4.png" alt="Post 5">
-      <div class="post-overlay">
-          <div class="post-stats">
-              <span><i class="fas fa-heart"></i> 4.5K</span>
-              <span><i class="fas fa-comment"></i> 280</span>
-          </div>
-      </div>
-  </div>
-  <div class="post-item">
-    <img src="ha5.png" alt="Post 5">
-    <div class="post-overlay">
-        <div class="post-stats">
-            <span><i class="fas fa-heart"></i> 4.5K</span>
-            <span><i class="fas fa-comment"></i> 280</span>
-        </div>
-    </div>
-</div>
-            <div class="post-item">
-                <img src="ha6.png" alt="Post 6">
-                <div class="post-overlay">
-                    <div class="post-stats">
-                        <span><i class="fas fa-heart"></i> 4.2K</span>
-                        <span><i class="fas fa-comment"></i> 250</span>
-                    </div>
-                </div>
-            </div>
-            </div>
-        
-            <!-- Popup Modal -->
-            <div class="popup" id="postPopup">
-                <span class="popup-close">&times;</span>
-                <div class="popup-content">
-                    <div class="popup-image">
-                        <img id="popupImage" src="" alt="Popup Image">
-                    </div>
-                    <div class="popup-details">
-                        <div class="popup-header">
-                            <img class="popup-avatar" src="teknologi.jpg" alt="Profile Picture">
-                            <strong>seputarteknologi</strong>
-                        </div>
-                        <div class="popup-actions">
-                            <div class="popup-action-icons">
-                                <i class="far fa-heart"></i>
-                                <i class="far fa-comment"></i>
-                                <i class="far fa-paper-plane"></i>
-                            </div>
-                            <i class="far fa-bookmark"></i>
-                        </div>
-                        <div class="popup-details-content">
-                            <div class="likes-count">250,456 likes</div>
-                            <div class="post-caption">
-                                <strong>seputarteknologi</strong> Exploring the cutting edge of technology at this year's innovation summit. Some incredible insights into the future of AI and machine learning! 🚀🤖 
-                                <br>
-                                <br>
-                                #TechInnovation #AIFuture #InnovationSummit
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-            <script>
-                // Popup Functionality
-                document.addEventListener('DOMContentLoaded', () => {
-                    const popup = document.getElementById('postPopup');
-                    const popupImage = document.getElementById('popupImage');
-                    const popupClose = document.querySelector('.popup-close');
-                    
-                    // Function to open popup
-                    function openPopup(imageSrc) {
-                        popupImage.src = imageSrc;
-                        popup.style.display = 'flex';
-                        document.body.style.overflow = 'hidden';
-                    }
-        
-                    // Function to close popup
-                    function closePopup() {
-                        popup.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-        
-                    // Add click event to all posts (including showcase post)
-                    const posts = document.querySelectorAll('.post-item, .showcase-post');
-                    posts.forEach(post => {
-                        post.addEventListener('click', (e) => {
-                            const imageSrc = post.getAttribute('data-src') || post.querySelector('img').src;
-                            openPopup(imageSrc);
-                        });
-                    });
-        
-                    // Close popup when clicking on close button
-                    popupClose.addEventListener('click', closePopup);
-        
-                    // Close popup when clicking outside of the image
-                    popup.addEventListener('click', (e) => {
-                        if (e.target === popup) {
-                            closePopup();
-                        }
-                    });
-        
-                    // Close popup with Escape key
-                    document.addEventListener('keydown', (e) => {
-                        if (e.key === 'Escape' && popup.style.display === 'flex') {
-                            closePopup();
-                        }
-                    });
-                });
-                document.addEventListener("DOMContentLoaded", function () {
+
+    <script>
+        const profileData = {
+            name: 'AL FANGKY',
+            bio: 'A multi-talented creator passionate about technology and design. Always seeking new challenges and committed to continuous personal and professional growth.',
+            skills: ['Web Development', 'Tech Enthusiast', 'Creator Digital'],
+            image: '/images/kiki.jpg',
+            projects: [
+                {
+                    image: '/images/hoho.jpg'
+
+                },
+                {
+                    image: '/images/hohe.jpg'
+                },
+                {
+                    image: '/images/hohu.jpg'
+                },
+                {
+                    image: '/images/hehe.jpg'
+                },
+                {
+                    image: '/images/hohi.jpg'
+                },
+                {
+                    image: '/images/hohoi.jpg'
+                }
+            ]
+        };
+
+        function updateProfile() {
+            document.getElementById('profileImage').src = profileData.image;
+            document.getElementById('profileName').textContent = profileData.name;
+            document.getElementById('profileBio').textContent = profileData.bio;
+
+            // Update skill tags
+            const skillTagsContainer = document.getElementById('skillTags');
+            skillTagsContainer.innerHTML = '';
+            profileData.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.classList.add('skill-tag');
+                skillTag.textContent = skill;
+                skillTagsContainer.appendChild(skillTag);
+            });
+
+            // Update projects
+            const postsContainer = document.getElementById('postsContainer');
+            postsContainer.innerHTML = '';
+            profileData.projects.forEach(project => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                
+                const postImage = document.createElement('img');
+                postImage.src = project.image;
+                postImage.alt = 'Project';
+                
+                const postOverlay = document.createElement('div');
+                postOverlay.classList.add('post-overlay');
+                
+                const postOverlayIcon = document.createElement('i');
+                postOverlayIcon.classList.add('fas', 'fa-external-link-alt', 'post-overlay-icon');
+                
+                postOverlay.appendChild(postOverlayIcon);
+                postElement.appendChild(postImage);
+                postElement.appendChild(postOverlay);
+                
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        window.addEventListener('load', updateProfile);
+        document.querySelectorAll('.footer-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.section-icon svg');
+                icon.style.animation = 'pulse 0.5s infinite';
+            });
+
+            section.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.section-icon svg');
+                icon.style.animation = 'none';
+            });
+        });
+
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (emailRegex.test(email)) {
+                alert('Terima kasih! Anda berhasil berlangganan newsletter.');
+                this.reset();
+            } else {
+                alert('Masukkan email yang valid');
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
         const hamburger = document.querySelector(".hamburger");
         const mobileMenu = document.querySelector(".mobile-menu");
         const navItems = document.querySelectorAll(".nav-item");
@@ -859,6 +954,6 @@
           });
         });
       });
-            </script>
-        </body>
-        </html>
+    </script>
+</body>
+</html>
